@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width,initial-scale=1.0">
+        <title>随机点名</title>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+            /* 设置背景颜色为414141 */
+            background-color: #414141;
+        }
+        /* 盒子居中 */
+        div{
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+            text-align: center;
+        }
+        /* 使用上期视频的文字渐变效果，再加一点点文字阴影 */
+        span,h2{
+        	text-shadow: 0 0 10px #dfd8d8;
+            background: linear-gradient(135deg,#14ffe9,#ffeb3b,#ff00e0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: ff 0.9s linear infinite;
+        }
+        @keyframes ff{
+            to{filter: hue-rotate(360deg);}
+        }
+        /* 设置一下字体大小 */
+        h2{
+            font-size: 72px;
+        }
+        span{
+            padding-top:80px;
+            font-size: 26px;
+        }
+
+
+        /* 按钮居中 */
+        button{
+            position: absolute;
+            top: 80%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+            width: 80px;
+            height: 25px;
+            box-shadow: 0 0 10px #fff;
+            /* 取消轮廓线 */
+            outline: none;
+            background-color: gray;
+        }
+    </style>
+    </head>
+    <body>
+        <div>
+            <h2>随机选择</h2>
+            <span id='name'></span>
+        </div>
+        <button id="button_text">start</button>
+
+        <script>
+            //获取标签
+            let nametxt = document.getElementById('name');
+            let button = document.getElementById('button_text');
+            //存储名字
+            let uname=['你请我吃饭','你请我吃饭','我请你吃饭','你请我吃饭','我请你吃饭','我请你吃饭','我请你吃饭','你请我吃饭'];
+            //创建一个函数随机生成数字
+            function getrandom(min,max){
+                return Math.floor(Math.random()*(max-min-1)+min);
+            }
+            //获取名字
+            function clock(){
+                let random = uname[getrandom(0,uname.length-1)];
+                nametxt.innerHTML = random;
+            }
+            //让名字一直刷新
+            let time = self.setInterval("clock",30);
+            //按钮绑定
+            let flag = true;
+            button.onclick=function(){
+                //flag为false时。点击按钮让刷新停止
+                if(flag==false){
+                    time = window.clearInterval(time);
+                    button.innerHTML='start';
+                    flag = true;
+                }
+                //flag为true时，点击按钮开始刷新
+                else{
+                    time = self.setInterval("clock()",30);
+                    button.innerHTML = 'stop';
+                    flag = false;
+                }
+
+            }
+        </script>
+    </body>
+</html>
